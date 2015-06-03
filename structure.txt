@@ -1,0 +1,21 @@
+
+main steering code												 %% ppjjww_wmuvm_lhe2csv.py
+	loops over lhe file lines
+	calls
+		particles = eventlines_to_particlesdict(eventlines, particles_naming_function = name_particles)  %% parsing.py
+		variables = calculate_dependent_variables(particles)			      			 %% ppjjww_wmuvm_process.py
+        	csv.write_dict(variables)									 %% csv_writer.py
+
+eventlines_to_particlesdict 											 %% parsing.py
+	calls
+		parse_event(lines)			#calls parse_event_header and parse_event_line (loop)	 %% parsing.py
+							#returns list of particles (1/line)  with all properties
+		particles_list_to_dictionary		#pt order; return dict(name,particle)			 %% parsing.py
+							calls name_particles (not default) %% ppjjww_wmuvm_process.py
+                                                        => result e.g. j1, j2, l1, l2 vectors with properties
+
+calculate_dependent_variables											%% ppjjww_wmuvm_process.py
+        calls
+		update_variables_by_single		#fill variable values					%% variables.py
+		update_variables_by_unordered_pair	#fill variable values					%% variables.py
+
